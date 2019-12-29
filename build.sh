@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -euxo pipefail
 
 SRC=$(realpath packages)
 #SIGN_KEY_ID=EC56CED77C05107E4C416EF8173873AE062F3A10
