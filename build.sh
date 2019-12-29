@@ -8,6 +8,7 @@ CONTAINER_NAME=package-builder
 ARCH=$(uname -m)
 
 if [! -z "$SIGN_KEY_FILE"]; then
+    echo "importing key from $SIGN_KEY_FILE"
     SIGN_KEY=$(cat "$SIGN_KEY_FILE")
 fi
 
