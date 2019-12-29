@@ -8,4 +8,6 @@ RUN apt-get update && \
 
 ADD docker/scripts/build-all.sh /
 
+ADD packages /packages
+
 CMD [ "/build-all.sh" ]
