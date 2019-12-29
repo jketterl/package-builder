@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
-set -euxo pipefail
+set -euo pipefail
 
 SRC=$(realpath packages)
-#SIGN_KEY_ID=EC56CED77C05107E4C416EF8173873AE062F3A10
-#SIGN_KEY=$(gpg --armor --export-secret-key $SIGN_KEY_ID)
 CONTAINER_NAME=package-builder
 ARCH=$(uname -m)
 
 if [[ ! -z "$SIGN_KEY_FILE" ]]; then
-    echo "importing key from $SIGN_KEY_FILE"
     SIGN_KEY=$(cat "$SIGN_KEY_FILE")
 fi
 
