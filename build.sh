@@ -7,6 +7,10 @@ SRC=$(realpath packages)
 CONTAINER_NAME=package-builder
 ARCH=$(uname -m)
 
+if [! -z "$SIGN_KEY_FILE"]; then
+    SIGN_KEY=$(cat "$SIGN_KEY_FILE")
+fi
+
 for DIST in `cat dists/$ARCH`; do
     TAG=${DIST//[:]/_}
     echo $TAG
