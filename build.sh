@@ -13,7 +13,7 @@ for DIST in `cat dists/$ARCH`; do
     TAG=${DIST//[:]/_}
 
     docker build --pull --build-arg BASE=$DIST -f docker/Dockerfile-debian -t package-builder:${TAG}_latest .
-    docker run --name package-builder -e SIGN_KEY_ID="$SIGN_KEY_ID" -e SIGN_KEY="$SIGN_KEY" package-builder:${TAG}_latest $@
+    docker run --name package-builder -e SIGN_KEY_ID="$SIGN_KEY_ID" -e SIGN_KEY="$SIGN_KEY" -e BUILD_NUMBER="${BUILD_NUMBER:-}" package-builder:${TAG}_latest $@
     docker cp $CONTAINER_NAME:/packages.tar.gz .
     docker rm $CONTAINER_NAME
     mkdir -p output/${ARCH}/${TAG}
