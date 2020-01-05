@@ -23,9 +23,9 @@ fi
 
 DISTS=""
 if [[ \${ARCH} == "x86_64" ]]; then
-    DISTS="debian:buster debian:stretch ubuntu:eoan"
+    DISTS="debian:buster ubuntu:eoan"
 elif [[ \${ARCH} == "armv7l" ]]; then
-    DISTS="debian:buster debian:stretch"
+    DISTS="debian:buster"
 elif [[ \${ARCH} == "aarch64" ]]; then
     DISTS="ubuntu:eoan"
 fi
