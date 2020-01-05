@@ -30,7 +30,7 @@ elif [[ \${ARCH} == "aarch64" ]]; then
     DISTS="ubuntu:eoan"
 fi
 
-for DIST in `cat dists/\$ARCH`; do
+for DIST in \${DISTS}; do
     OUTPUT_DIST=\${DIST//[:]/_}
     TAG=\${OUTPUT_DIST}_\${ARCH}_latest
 
