@@ -21,10 +21,10 @@ fi
 
 for DIST in `cat dists/\$ARCH`; do
     OUTPUT_DIST=\${DIST//[:]/_}
-    TAG = \${OUTPUT_DIST}_\${ARCH}_latest
+    TAG=\${OUTPUT_DIST}_\${ARCH}_latest
 
     docker pull 768356633999.dkr.ecr.eu-central-1.amazonaws.com/package-builder:\${TAG}
-    RC = 0
+    RC=0
     docker run --name package-builder -e SIGN_KEY_ID="\${SIGN_KEY_ID}" -e SIGN_KEY="\$SIGN_KEY" \${BUILD_NUMBER_ARG} 768356633999.dkr.ecr.eu-central-1.amazonaws.com/package-builder:\${TAG} ${params.pack} || RC=\$?
     if [[ \${RC} ]]; then
         docker cp \${CONTAINER_NAME}:/packages.tar.gz . || RC=\$?
