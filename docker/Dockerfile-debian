@@ -4,6 +4,10 @@ FROM $BASE
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
+    apt-get install -y wget gnupg && \
+    wget -O - https://repo.openwebrx.de/debian/key.gpg.txt | apt-key add && \
+    echo "deb https://repo.openwebrx.de/debian/ experimental main" > /etc/apt/sources.list.d/openwebrx.list && \
+    apt-get update && \
     apt-get install -y cmake build-essential debsigs git devscripts dh-python python3 python3-setuptools dh-systemd \
       libfftw3-dev librtlsdr-dev libsoapysdr-dev netcat git-buildpackage libitpp-dev libsndfile1-dev portaudio19-dev help2man && \
     rm -rf /var/lib/apt/lists/*
@@ -12,4 +16,4 @@ ADD docker/scripts/build-all.sh /
 
 ADD packages /packages
 
-CMD [ "/build-all.sh" ]
+ENTRYPOINT [ "/build-all.sh" ]
