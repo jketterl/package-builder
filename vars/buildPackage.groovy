@@ -4,8 +4,8 @@ def call(Map params) {
         sh '$(aws ecr get-login --no-include-email --region eu-central-1)'
     }
     withCredentials([file(credentialsId: params.gpgsigningkey, variable: "SIGN_KEY_FILE")]) {
-        sh """
-set -eu
+        sh """#!/usr/bin/env bash
+set -euo pipefail +x
 
 CONTAINER_NAME=package-builder
 ARCH=\$(uname -m)
