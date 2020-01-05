@@ -5,7 +5,7 @@ def call(Map params) {
     }
     withCredentials([file(credentialsId: params.gpgsigningkey, variable: "SIGN_KEY_FILE")]) {
         sh """
-set -euo pipefail
+set -eu
 
 CONTAINER_NAME=package-builder
 ARCH=\$(uname -m)
