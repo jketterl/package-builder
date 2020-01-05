@@ -1,4 +1,5 @@
-def call(String pack, String gpgsigningkey, String S3profile) {
+def call(String arch, String pack, String gpgsigningkey, String S3profile) {
+    agent { label arch }
     steps {
         withCredentials([file(credentialsId: gpgsigningkey, variable: "SIGN_KEY_FILE")]) {
             git 'https://github.com/jketterl/package-builder.git'
