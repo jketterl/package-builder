@@ -7,7 +7,7 @@ def call(Map params) {
         sh """#!/usr/bin/env bash
 set -euo pipefail +x
 
-RAND=\$(shuf -zer -n20  {A..Z} {a..z} {0..9})
+RAND=\$(shuf -ze -n20  {A..Z} {a..z} {0..9})
 CONTAINER_NAME=package-builder-\${RAND}
 IMAGE_NAME=768356633999.dkr.ecr.eu-central-1.amazonaws.com/package-builder
 ARCH=\$(uname -m)
