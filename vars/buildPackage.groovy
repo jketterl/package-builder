@@ -19,7 +19,7 @@ if [[ ! -z "\${BUILD_NUMBER:-}" ]]; then
     BUILD_NUMBER_ARG="-e BUILD_NUMBER=\${BUILD_NUMBER}"
 fi
 
-for DIST in `cat dists/$ARCH`; do
+for DIST in `cat dists/\$ARCH`; do
     OUTPUT_DIST=\${DIST//[:]/_}
     TAG = \${OUTPUT_DIST}_\${ARCH}_latest
 
