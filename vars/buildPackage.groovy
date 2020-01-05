@@ -7,7 +7,9 @@ def call(Map params) {
         sh """#!/usr/bin/env bash
 set -euo pipefail +x
 
-CONTAINER_NAME=package-builder
+RAND=\$(shuf -zer -n20  {A..Z} {a..z} {0..9})
+CONTAINER_NAME=package-builder-\${RAND}
+IMAGE_NAME=768356633999.dkr.ecr.eu-central-1.amazonaws.com/package-builder
 ARCH=\$(uname -m)
 
 if [[ ! -z "\${SIGN_KEY_FILE:-}" ]]; then
@@ -23,9 +25,9 @@ for DIST in `cat dists/\$ARCH`; do
     OUTPUT_DIST=\${DIST//[:]/_}
     TAG=\${OUTPUT_DIST}_\${ARCH}_latest
 
-    docker pull 768356633999.dkr.ecr.eu-central-1.amazonaws.com/package-builder:\${TAG}
+    docker pull \${IMAGE_NAME}:\${TAG}
     RC=0
-    docker run --name package-builder -e SIGN_KEY_ID="\${SIGN_KEY_ID}" -e SIGN_KEY="\$SIGN_KEY" \${BUILD_NUMBER_ARG} 768356633999.dkr.ecr.eu-central-1.amazonaws.com/package-builder:\${TAG} ${params.pack} || RC=\$?
+    docker run --name \${CONTAINER_NAME} -e SIGN_KEY_ID="\${SIGN_KEY_ID}" -e SIGN_KEY="\$SIGN_KEY" \${BUILD_NUMBER_ARG} \${IMAGE_NAME}:\${TAG} ${params.pack} || RC=\$?
     if [[ \${RC} ]]; then
         docker cp \${CONTAINER_NAME}:/packages.tar.gz . || RC=\$?
     fi
@@ -37,7 +39,7 @@ for DIST in `cat dists/\$ARCH`; do
     tar xvfz packages.tar.gz -C output/\${ARCH}/\${OUTPUT_DIST}
     rm packages.tar.gz
 done
-    """
+        """
     }
     s3Upload consoleLogLevel: 'INFO', dontWaitForConcurrentBuildCompletion: false, entries: [[bucket: 'de.dd5jfk.openwebrx.debian-packages', excludedFile: '', flatten: false, gzipFiles: false, keepForever: false, managedArtifacts: false, noUploadOnFailure: true, selectedRegion: 'eu-central-1', showDirectlyInBrowser: false, sourceFile: 'output/**/*.deb', storageClass: 'STANDARD', uploadFromSlave: true, useServerSideEncryption: false]], pluginFailureResultConstraint: 'FAILURE', profileName: params.s3profile, userMetadata: []
 }
