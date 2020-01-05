@@ -1,2 +1,3 @@
 debian:buster
+debian:stretch
 ubuntu:eoan

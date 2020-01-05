@@ -21,6 +21,15 @@ if [[ ! -z "\${BUILD_NUMBER:-}" ]]; then
     BUILD_NUMBER_ARG="-e BUILD_NUMBER=\${BUILD_NUMBER}"
 fi
 
+DISTS=""
+if [[ \${ARCH} == "x86_64" ]]; then
+    DISTS="debian:buster debian:stretch ubuntu:eoan"
+elif [[ \${ARCH} == "armv7l" ]]; then
+    DISTS="debian:buster debian:stretch"
+elif [[ \${ARCH} == "aarch64" ]]; then
+    DISTS="ubuntu:eoan"
+fi
+
 for DIST in `cat dists/\$ARCH`; do
     OUTPUT_DIST=\${DIST//[:]/_}
     TAG=\${OUTPUT_DIST}_\${ARCH}_latest
