@@ -51,4 +51,5 @@ done
         """
     }
     s3Upload consoleLogLevel: 'INFO', dontWaitForConcurrentBuildCompletion: false, entries: [[bucket: 'de.dd5jfk.openwebrx.debian-packages', excludedFile: '', flatten: false, gzipFiles: false, keepForever: false, managedArtifacts: false, noUploadOnFailure: true, selectedRegion: 'eu-central-1', showDirectlyInBrowser: false, sourceFile: 'output/**/*.deb', storageClass: 'STANDARD', uploadFromSlave: true, useServerSideEncryption: false]], pluginFailureResultConstraint: 'FAILURE', profileName: params.s3profile, userMetadata: []
+    snsPublish(topicArn:'arn:aws:sns:eu-central-1:768356633999:RepositoryPush', subject:"New ${params.pack} package", message:'this is your message', messageAttributes: [])
 }
