@@ -51,7 +51,7 @@ done
         """
     }
     withAWS(region:'eu-central-1', credentials:params.awscredentials){
-        s3Upload acl: 'Private', bucket: 'de.dd5jfk.openwebrx.debian-packages', cacheControl: '', excludePathPattern: '', includePathPattern: 'output/**/*.deb', metadatas: [''], path: '', redirectLocation: '', sseAlgorithm: '', workingDir: ''
+        s3Upload acl: 'Private', bucket: 'de.dd5jfk.openwebrx.debian-packages', cacheControl: '', excludePathPattern: '', includePathPattern: '**/*.deb', metadatas: [''], path: '', redirectLocation: '', sseAlgorithm: '', workingDir: 'output'
         snsPublish(topicArn:'arn:aws:sns:eu-central-1:768356633999:RepositoryPush', subject:"New ${params.pack} package", message:'this is your message', messageAttributes: [])
     }
 }
