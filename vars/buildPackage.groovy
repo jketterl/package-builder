@@ -1,7 +1,7 @@
 def call(Map params) {
     sh 'rm -rf output/'
     withAWS(region:'eu-central-1', credentials:params.awscredentials){
-        ecrLogin()
+        sh "${ecrLogin()}"
         withCredentials([file(credentialsId: params.gpgsigningkey, variable: "SIGN_KEY_FILE")]) {
             sh """#!/usr/bin/env bash
 set -euo pipefail +x
