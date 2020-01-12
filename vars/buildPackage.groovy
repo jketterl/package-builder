@@ -1,10 +1,9 @@
 def call(Map params) {
     sh 'rm -rf output/'
-    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: params.awscredentials, secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-        sh '$(aws ecr get-login --no-include-email --region eu-central-1)'
-    }
-    withCredentials([file(credentialsId: params.gpgsigningkey, variable: "SIGN_KEY_FILE")]) {
-        sh """#!/usr/bin/env bash
+    withAWS(region:'eu-central-1', credentials:params.awscredentials){
+        ecrLogin()
+        withCredentials([file(credentialsId: params.gpgsigningkey, variable: "SIGN_KEY_FILE")]) {
+            sh """#!/usr/bin/env bash
 set -euo pipefail +x
 
 RAND=\$(shuf -ze -n20  {A..Z} {a..z} {0..9})
@@ -48,9 +47,8 @@ for DIST in \${DISTS}; do
     tar xvfz packages.tar.gz -C output/\${ARCH}/\${OUTPUT_DIST}
     rm packages.tar.gz
 done
-        """
-    }
-    withAWS(region:'eu-central-1', credentials:params.awscredentials){
+            """
+        }
         s3Upload acl: 'Private', bucket: 'de.dd5jfk.openwebrx.debian-packages', cacheControl: '', excludePathPattern: '', includePathPattern: '**/*.deb', metadatas: [''], path: '', redirectLocation: '', sseAlgorithm: '', workingDir: 'output'
         snsPublish(topicArn:'arn:aws:sns:eu-central-1:768356633999:RepositoryPush', subject:"New ${params.pack} package", message:'this is your message')
     }
