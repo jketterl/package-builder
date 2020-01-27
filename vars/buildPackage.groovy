@@ -11,25 +11,14 @@ CONTAINER_NAME=package-builder-\${RAND}
 IMAGE_NAME=768356633999.dkr.ecr.eu-central-1.amazonaws.com/package-builder
 ARCH=\$(uname -m)
 
-if [[ ! -z "\${SIGN_KEY_FILE:-}" ]]; then
-    SIGN_KEY=\$(cat "\$SIGN_KEY_FILE")
-fi
+SIGN_KEY=\$(cat "\$SIGN_KEY_FILE")
 
 BUILD_NUMBER_ARG=""
 if [[ ! -z "\${BUILD_NUMBER:-}" ]]; then
     BUILD_NUMBER_ARG="-e BUILD_NUMBER=\${BUILD_NUMBER}"
 fi
 
-DISTS=""
-if [[ \${ARCH} == "x86_64" ]]; then
-    DISTS="debian:buster ubuntu:eoan"
-elif [[ \${ARCH} == "armv7l" ]]; then
-    DISTS="debian:buster"
-elif [[ \${ARCH} == "aarch64" ]]; then
-    DISTS="ubuntu:eoan"
-fi
-
-for DIST in \${DISTS}; do
+for DIST in "${params.dists.join(" ")}"}; do
     OUTPUT_DIST=\${DIST//[:]/_}
     TAG=\${OUTPUT_DIST}_\${ARCH}_latest
 
