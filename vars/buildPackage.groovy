@@ -17,6 +17,7 @@ BUILD_NUMBER_ARG=""
 if [[ ! -z "\${BUILD_NUMBER:-}" ]]; then
     BUILD_NUMBER_ARG="-e BUILD_NUMBER=\${BUILD_NUMBER}"
 fi
+echo ${params.dists.join(" ")}
 
 for DIST in "${params.dists.join(" ")}"}; do
     OUTPUT_DIST=\${DIST//[:]/_}
