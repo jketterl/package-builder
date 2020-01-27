@@ -19,10 +19,8 @@ if [[ ! -z "\${BUILD_NUMBER:-}" ]]; then
 fi
 
 for DIST in ${params.dists.join(" ")}; do
-    echo \${DIST}
     OUTPUT_DIST=\${DIST//[:]/_}
     TAG=\${OUTPUT_DIST}_\${ARCH}_latest
-    echo \${TAG}
 
     docker pull \${IMAGE_NAME}:\${TAG}
     RC=0
