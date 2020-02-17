@@ -3,6 +3,9 @@ set -euo pipefail
 
 git clone --depth 1 https://github.com/jketterl/digiham.git
 pushd digiham
+if [[ ! -x ${RELEASE_BRANCH:-} ]]; then
+    git checkout ${RELEASE_BRANCH}
+fi
 mkdir build
 pushd build
 cmake ..
