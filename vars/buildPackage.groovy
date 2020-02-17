@@ -16,7 +16,7 @@ SIGN_KEY=\$(cat "\$SIGN_KEY_FILE")
 BUILD_NUMBER_ARG=""
 if [[ ! -z "${params.releaseBranch}" ]]; then
     BUILD_NUMBER_ARG="-e RELEASE_BRANCH=${params.releaseBranch}"
-else if [[ ! -z "\${BUILD_NUMBER:-}" ]]; then
+elif [[ ! -z "\${BUILD_NUMBER:-}" ]]; then
     BUILD_NUMBER_ARG="-e BUILD_NUMBER=\${BUILD_NUMBER}"
 fi
 
