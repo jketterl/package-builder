@@ -41,7 +41,7 @@ for DIST in ${params.dists.join(" ")}; do
 done
             """
         }
-        s3Upload acl: 'Private', bucket: 'de.dd5jfk.openwebrx.debian-packages', cacheControl: '', excludePathPattern: '', includePathPattern: '**/*.deb', metadatas: [''], path: ${params.releaseBranch} ? 'release/' : '', redirectLocation: '', sseAlgorithm: '', workingDir: 'output'
+        s3Upload acl: 'Private', bucket: 'de.dd5jfk.openwebrx.debian-packages', cacheControl: '', excludePathPattern: '', includePathPattern: '**/*.deb', metadatas: [''], path: params.releaseBranch ? 'release/' : '', redirectLocation: '', sseAlgorithm: '', workingDir: 'output'
         snsPublish(topicArn:'arn:aws:sns:eu-central-1:768356633999:RepositoryPush', subject:"New ${params.pack} package", message:'this is your message')
     }
 }
