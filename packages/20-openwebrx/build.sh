@@ -3,7 +3,7 @@ set -euo pipefail
 
 if [[ $(uname -m) == "x86_64" ]]; then
     git clone --depth 1 https://github.com/jketterl/openwebrx.git
-    if [[ ! -x ${RELEASE_BRANCH:-} ]]; then
+    if [[ ! -z ${RELEASE_BRANCH:-} ]]; then
         git checkout ${RELEASE_BRANCH}
     fi
     pushd openwebrx

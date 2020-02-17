@@ -3,7 +3,7 @@ set -euo pipefail
 
 git clone --depth 1 -b debian https://github.com/jketterl/csdr.git
 pushd csdr
-if [[ ! -x ${RELEASE_BRANCH:-} ]]; then
+if [[ ! -z ${RELEASE_BRANCH:-} ]]; then
     git checkout ${RELEASE_BRANCH}
 fi
 if [[ ! -z ${BUILD_NUMBER:-} ]]; then
