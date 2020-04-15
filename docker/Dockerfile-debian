@@ -14,7 +14,7 @@ RUN apt-get update && \
         echo "deb https://repo.openwebrx.de/debian/ experimental main" > /etc/apt/sources.list.d/openwebrx-experimental.list; \
     fi && \
     apt-get update && \
-    apt-get install --no-upgrade -y cmake build-essential debsigs git devscripts dh-python python3-all dh-systemd \
+    apt-get install --no-upgrade -y cmake build-essential debsigs git devscripts dh-python python3-all python3-setuptools dh-systemd \
       libfftw3-dev librtlsdr-dev libsoapysdr-dev netcat git-buildpackage libitpp-dev libsndfile1-dev portaudio19-dev help2man && \
     rm -rf /var/lib/apt/lists/*
 
