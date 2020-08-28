@@ -2,10 +2,7 @@
 set -euo pipefail
 
 if [[ $(uname -m) == "x86_64" ]]; then
-    BRANCH_ARG=""
-    if [[ ! -z ${RELEASE_BRANCH:-} ]]; then
-        BRANCH_ARG="-b ${RELEASE_BRANCH}"
-    fi
+    BRANCH_ARG="-b 0.19.1"
 
     git clone --depth 1 ${BRANCH_ARG} https://github.com/jketterl/openwebrx.git
     pushd openwebrx

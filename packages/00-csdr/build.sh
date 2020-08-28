@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BRANCH_ARG=""
-if [[ ! -z ${RELEASE_BRANCH:-} ]]; then
-    BRANCH_ARG="-b ${RELEASE_BRANCH}"
-fi
+BRANCH_ARG="-b 0.16.0"
 git clone --depth 1 ${BRANCH_ARG} https://github.com/jketterl/csdr.git
 pushd csdr
 if [[ ! -z ${BUILD_NUMBER:-} ]]; then
